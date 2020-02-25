@@ -3,13 +3,13 @@
   <head>
     <meta charset="utf-8" >
 
-<title>理解阻塞非阻塞与同步异步 | Gridea</title>
+<title>理解阻塞非阻塞与同步异步 | 冷小贱的博客</title>
 <meta name="description" content="好嗨哟">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://lengfj.github.io/favicon.ico?v=1582618491974">
+<link rel="shortcut icon" href="https://lengfj.github.io/favicon.ico?v=1582620421402">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://lengfj.github.io/styles/main.css">
 
@@ -30,8 +30,8 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://lengfj.github.io">
-        <img src="https://lengfj.github.io/images/avatar.png?v=1582618491974" class="site-logo">
-        <h1 class="site-title">Gridea</h1>
+        <img src="https://lengfj.github.io/images/avatar.png?v=1582620421402" class="site-logo">
+        <h1 class="site-title">冷小贱的博客</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
         <div class="line"></div>
@@ -97,10 +97,14 @@
             
             <div class="post-content">
               <p>我们首先想象一种场景，阳光明媚的下午我们去一家咖啡店买咖啡~<br>
-我们选好了一杯拿铁，提交给了店员。比方说我们去的这家店有提醒服务，那么我们就不用等待做咖啡的时间了，我可以跑到一边打一把王者荣耀，店家做好后会提醒我，这就是异步。<br>
-但是万一这家店没有提醒服务，我们就要在那里等待，看他做咖啡的过程，装杯子...这个就是同步。<br>
+我们选好了一杯拿铁，提交给了店员。比方说我们去的这家店有提醒服务，那么我们就不用等待做咖啡的时间了，我可以跑到一边打一把王者荣耀，店家做好后会提醒我，这就是异步。但是万一这家店没有提醒服务，我们就要在那里等待，看他做咖啡的过程，装杯子...这个就是同步。<br>
 当然我们灵活一点不管店家是否有提醒服务，那么我们可以边等待边打游戏，等人物死了或每过3分钟抬头问下店员有没有做好，这就是非阻塞了。或者店员长得比较美丽，我们喜欢看她做咖啡的过程，，这就是阻塞。</p>
-<p>阻塞非阻塞 和 同步异步 的区别就是</p>
+<p>1.同步和异步关注的是<strong>消息通信机制</strong><br>
+同步：在调用者发出调用请求后，会主动等待等到调用结果。没有获取到调用结果时该调用就不会返回。<br>
+异步：在调用者发出调用请求后这个调用直接返回了，所以不会直接返回结果，是等到被调用者通过状态、通知来通知调用者，或者通过回调函数处理。<br>
+2.阻塞与非阻塞关注的是<strong>在等待调用结果时的状态</strong>。<br>
+阻塞：是指调用结果返回之前，当前线程会被挂起。只有调用者得到结果之后才会继续执行。<br>
+非阻塞：是指调用在不能直接返回结果的时候不会阻塞起当前线程，线程还可以做其他事情。</p>
 
             </div>
             
