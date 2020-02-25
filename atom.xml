@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://lengfj.github.io</id>
     <title>Gridea</title>
-    <updated>2020-02-25T08:13:24.552Z</updated>
+    <updated>2020-02-25T08:14:54.503Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://lengfj.github.io"/>
     <link rel="self" href="https://lengfj.github.io/atom.xml"/>
@@ -10,6 +10,19 @@
     <logo>https://lengfj.github.io/images/avatar.png</logo>
     <icon>https://lengfj.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Gridea</rights>
+    <entry>
+        <title type="html"><![CDATA[理解阻塞非阻塞与同步异步]]></title>
+        <id>https://lengfj.github.io/post/li-jie-zu-sai-fei-zu-sai-yu-tong-bu-yi-bu</id>
+        <link href="https://lengfj.github.io/post/li-jie-zu-sai-fei-zu-sai-yu-tong-bu-yi-bu">
+        </link>
+        <updated>2020-02-25T06:36:09.000Z</updated>
+        <content type="html"><![CDATA[<p>我们首先想象一种场景，阳光明媚的下午我们去一家咖啡店买咖啡~<br>
+我们选好了一杯拿铁，提交给了店员。比方说我们去的这家店有提醒服务，那么我们就不用等待做咖啡的时间了，我可以跑到一边打一把王者荣耀，店家做好后会提醒我，这就是异步。<br>
+但是万一这家店没有提醒服务，我们就要在那里等待，看他做咖啡的过程，装杯子...这个就是同步。<br>
+当然我们灵活一点不管店家是否有提醒服务，那么我们可以边等待边打游戏，等人物死了或每过3分钟抬头问下店员有没有做好，这就是非阻塞了。或者店员长得比较美丽，我们喜欢看她做咖啡的过程，，这就是阻塞。</p>
+<p>阻塞非阻塞 和 同步异步 的区别就是</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[这也太棒了吧]]></title>
         <id>https://lengfj.github.io/post/zhe-ye-tai-bang-liao-ba</id>
