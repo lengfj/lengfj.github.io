@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://lengfj.github.io</id>
     <title>冷小贱的博客</title>
-    <updated>2020-02-25T08:47:31.317Z</updated>
+    <updated>2020-07-14T06:47:01.752Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://lengfj.github.io"/>
     <link rel="self" href="https://lengfj.github.io/atom.xml"/>
@@ -11,9 +11,47 @@
     <icon>https://lengfj.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, 冷小贱的博客</rights>
     <entry>
+        <title type="html"><![CDATA[Java代码是怎么运行的]]></title>
+        <id>https://lengfj.github.io/post/java-dai-ma-shi-zen-me-yun-xing-de/</id>
+        <link href="https://lengfj.github.io/post/java-dai-ma-shi-zen-me-yun-xing-de/">
+        </link>
+        <updated>2020-07-14T06:18:59.000Z</updated>
+        <content type="html"><![CDATA[<h3 id="为什么java要在虚拟机中运行">为什么Java要在虚拟机中运行</h3>
+<ol>
+<li>Java是一门高级程序语言，它的语法非常复杂，抽象程度很高，直接在硬件上运行这种复杂的程序并不现实。所以要在运行之前要讲Java语法转换成机器可以识别的字节码</li>
+<li>“一次编写，到处运行”；Java虚拟机可以由硬件实现，在常见的系统平台上都提供有JVM的软件实现，这么做就为了一个程序一旦被转换成了Java字节码，那么他可以在不同平台的JVM中运行。</li>
+<li>JVM虚拟机作为<strong>托管环境</strong>(Managed Runtime)，能够代替我们处理一些代码中的冗长而且容易出错的部分。比如自动内存管理、垃圾回收机制。</li>
+<li>托管环境还提供了数组越界、动态类型、安全权限等等的<strong>动态检测</strong>，使我们免于书写这些无关业务逻辑的代码</li>
+</ol>
+<h3 id="java虚拟机具体是怎么运行java字节码的">Java虚拟机具体是怎么运行Java字节码的</h3>
+<p><strong>在JDK中的HotSpot虚拟机里面，翻译成机器码的过程有两种形式：第一种是解释执行，第二种是即时翻译(JIT)</strong></p>
+<ol>
+<li>第一种是<strong>解释执行</strong>：即逐条将字节码翻译成机器码并执行。优势为无需等待编译</li>
+<li>第二种是<strong>即时编译</strong>(Just-In-Time compilation，JIT)：即将一个方法中包含的所有字节码编译成机器码后再执行。优势是运行速度更快。</li>
+</ol>
+<p>HotSpot默认是采用的混合模式。他会<strong>先进行解释执行字节码，对于热点代码，以方法为单位进行即时翻译</strong>。</p>
+<p>以虚拟机的角度来看下Java虚拟机到底是怎么运行Java字节码的：</p>
+<ol>
+<li>Java虚拟机会将Java代码编译成的class文件加载到Java虚拟机中。加载后的Java类会被存放于<strong>方法区（元空间）</strong>（Method Area）中。实际运行时，虚拟机会执行方法区内的代码</li>
+<li>Java虚拟机会在内存中划分出<strong>堆</strong>和<strong>栈</strong>来存储运行时环境。而且栈细分为<strong>Java方法栈</strong>，<strong>本地方法栈</strong>、及<strong>PC寄存器</strong>(用于存放各个线程执行位置的地方)
+<ol>
+<li><strong>Java方法栈</strong>：我们自己写的Java类方法</li>
+<li><strong>本地方法栈</strong>：用c++写的native方法，一般方法用native关键字修饰)</li>
+<li><strong>PC寄存器</strong>：用于存放各个线程执行位置的地方</li>
+</ol>
+</li>
+</ol>
+<figure data-type="image" tabindex="1"><img src="https://github.com/lengfj/Picture/blob/master/ab5c3523af08e0bf2f689c1d6033ef77.png?raw=true" alt="Java虚拟机内存分配" loading="lazy"></figure>
+<ol start="3">
+<li>在每当运行进入Java方法时，Java虚拟机会在当前线程的Java方法栈中生成一个栈帧，用于<strong>存放局部变量及字节码的操作数</strong>。这个栈帧是提前计算好的，且不要求在内存空间中连续分布。</li>
+<li>当方法退出时(无论正常返回还是异常退出)，Java虚拟机则会舍弃当前线程的当前帧。这个当前帧就是存储的局部变量及字节码的操作数。</li>
+</ol>
+]]></content>
+    </entry>
+    <entry>
         <title type="html"><![CDATA[理解阻塞非阻塞与同步异步]]></title>
-        <id>https://lengfj.github.io/post/li-jie-zu-sai-fei-zu-sai-yu-tong-bu-yi-bu</id>
-        <link href="https://lengfj.github.io/post/li-jie-zu-sai-fei-zu-sai-yu-tong-bu-yi-bu">
+        <id>https://lengfj.github.io/post/li-jie-zu-sai-fei-zu-sai-yu-tong-bu-yi-bu/</id>
+        <link href="https://lengfj.github.io/post/li-jie-zu-sai-fei-zu-sai-yu-tong-bu-yi-bu/">
         </link>
         <updated>2020-02-25T06:36:09.000Z</updated>
         <content type="html"><![CDATA[<p>我们首先想象一种场景，阳光明媚的下午我们去一家咖啡店买咖啡~<br>
@@ -25,41 +63,6 @@
 2.阻塞与非阻塞关注的是<strong>在等待调用结果时的状态</strong>。<br>
 阻塞：是指调用结果返回之前，当前线程会被挂起。只有调用者得到结果之后才会继续执行。<br>
 非阻塞：是指调用在不能直接返回结果的时候不会阻塞起当前线程，线程还可以做其他事情。</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[这也太棒了吧]]></title>
-        <id>https://lengfj.github.io/post/zhe-ye-tai-bang-liao-ba</id>
-        <link href="https://lengfj.github.io/post/zhe-ye-tai-bang-liao-ba">
-        </link>
-        <updated>2020-01-09T09:38:35.000Z</updated>
-        <content type="html"><![CDATA[<p>😊<br>
-🤡<br>
-🤠<br>
-😏<br>
-😒<br>
-😖<br>
-😣<br>
-☹️<br>
-🙁<br>
-😲<br>
-🎅<br>
-🤶<br>
-🙅<br>
-🤦<br>
-‍♂<br>
-⛑<br>
-👘<br>
-👠</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[只是测试]]></title>
-        <id>https://lengfj.github.io/post/zhi-shi-ce-shi</id>
-        <link href="https://lengfj.github.io/post/zhi-shi-ce-shi">
-        </link>
-        <updated>2020-01-01T08:28:18.000Z</updated>
-        <content type="html"><![CDATA[<p>唉测试</p>
 ]]></content>
     </entry>
 </feed>
