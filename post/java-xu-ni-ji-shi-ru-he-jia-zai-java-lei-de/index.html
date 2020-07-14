@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>Java虚拟机是如何加载Java类的？ | 冷小贱的博客</title>
+<meta name="description" content="好嗨哟">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://lengfj.github.io/favicon.ico?v=1594712591008">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://lengfj.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://lengfj.github.io">
+        <img src="https://lengfj.github.io/images/avatar.png?v=1594712591008" class="site-logo">
+        <h1 class="site-title">冷小贱的博客</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      好嗨哟
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://lengfj.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">Java虚拟机是如何加载Java类的？</h2>
+            <div class="post-date">2020-07-14</div>
+            
+            <div class="post-content">
+              <h3 id="java中的语言类型可以分为两大类">Java中的语言类型可以分为两大类：</h3>
+<ol>
+<li>
+<p>基本类型：基本类型是Java虚拟机预先定义好的</p>
+</li>
+<li>
+<p>引用类型：可以分为四种：类、接口、数组类和泛型参数(在编译过程中会被擦除，因此也可以不算)</p>
+</li>
+</ol>
+<p>对于<strong>引用类型，Java虚拟机都需要对其进行连接和初始化</strong>。主要就是我们常说的<strong>加载、连接、初始化</strong>。</p>
+<h3 id="加载">加载</h3>
+<p><strong>加载是指查找字节流，并据此创建类的过程。</strong></p>
+<p>在加载阶段，Java虚拟机需要借助<strong>类加载器</strong>来完成查找字节流的过程。这个过程会使用<strong>双亲委派模型</strong>来完成。</p>
+<p><strong>双亲委派模型：即接收到加载请求时，会先将请求转发给父类加载器</strong></p>
+<p>类加载器：</p>
+<ol>
+<li>启动类加载器(Bootstrap class loader)：启动类加载器由C++实现，没有对应的类，所以在代码中使用null来指代。负责加载最基础、最重要的类</li>
+<li>扩展类加载器(extension class loader)：父 类加载器是启动类加载器。负责加载项目次要、但又通用的类，比如存放在JRE的lib/ext目录下的jar包中的类</li>
+<li>应用类加载器(application class loader)：父 类加载器是扩展类加载器。负责加载应用程序路径下的类。默认情况下，应用程序中包含的类便是由应用类加载器加载的。</li>
+<li>自定义类加载器：除了Java核心类库提供的类加载器外，我们还可以假如自定义的类加载器，来实现特殊的加载方式。比如：我们可以对 class 文件进行加密，加载时再利用自定义的类加载器对其解密。</li>
+</ol>
+<h3 id="连接">连接</h3>
+<p><strong>连接是指将创建成的类合并至Java虚拟机中，使之能够执行的过程</strong>。可以分为<strong>验证</strong>、<strong>准备</strong>、<strong>解析</strong>三个阶段。</p>
+<ul>
+<li>验证：验证阶段的目的，在于确保被加载类能够满足Java虚拟机的约束条件。<strong>一般来说，Java编译器生成的class文件必然满足Java虚拟机的约束条件</strong>。但是有一些asmTools之类的字节码工具，可以修改class文件，所以这一阶段，还是由必要的。</li>
+<li>准备：目的是为被加载类的静态字段分配内存</li>
+<li>解析：目的是将符号引用解析成实际引用。如果符号引用指向一个未被加载的类，或者未被加载类的字段或方法，那么解析将触发这个类的加载（但未必触发类的连接及初始化）。
+<ul>
+<li>符号引用：在class文件被加载至Java虚拟机之前，这个类<strong>无法知道其他类及方法、字段对应的具体地址</strong>，甚至<strong>不知道自己方法、字段的地址</strong>。因此，引用这些成员时，Java编译器会生成一个<strong>符号引用</strong>。
+<ul>
+<li>例如调用一个方法：编译器会生成一个包含目标方法所在类的名字、目标方法的名字、接收参数类型以及返回值类型的符号引用，来指代所要调用的方法。</li>
+</ul>
+</li>
+<li>解析阶段是非必须的：Java 虚拟机规范并没有要求在链接过程中完成解析。它仅规定了：如果某些字节码使用了符号引用，那么在执行这些字节码之前，需要完成对这些符号引用的解析。</li>
+</ul>
+</li>
+</ul>
+<h3 id="初始化">初始化</h3>
+<p><strong>类初始化时去初始化类中的静态字段</strong>。我们要初始化一个静态字段，可以在<strong>声明时直接赋值</strong>，也可以在<strong>静态代码中对其赋值</strong>。</p>
+<p>如果被直接赋值的静态字段被 final 所修饰，并且它的类型是基本类型或字符串时，那么他会被Java编译器标记为常量值(ConstantValue)，其初始化由Java虚拟机完成。</p>
+<p>除此之外的其他对静态变量赋值的操作，则会被Java编译器置于同一方法中，并把它命名为&lt;clinit&gt;。</p>
+<p>类加载的初始化过程便是为被标记为常量值的字段赋值，以及执行 &lt;clint&gt; 方法的过程，<strong>Java虚拟机会通过加锁来确保类的 &lt;clint&gt; 方法仅被执行一次</strong>。</p>
+<p>类的初始化过程何时会被初始化？</p>
+<ol>
+<li>当虚拟机启动时，初始化用户指定的主类;</li>
+<li>当遇到用以新建目标类实例的 new 指令时，初始化 new 指令的目标类。</li>
+<li>当遇到调用静态方法/静态字段的指令时，初始化该静态方法/静态字段所在的类</li>
+<li>子类的初始化会触发父类的初始化</li>
+<li>如果一个接口定义了default方法，那么直接实现或者间接实现该借口的类的初始化，会触发该借口的初始化</li>
+<li>使用反射API对某个类进行反射调用时，初始化这个类</li>
+<li>当初次调用 MethodHandle 实例时，初始化该 MethodHandle 指向的方法所在的类。</li>
+</ol>
+<pre><code class="language-java">//单例懒汉初始化 内部静态类实现方式
+public class Singleton {
+  private Singleton() {}
+  private static class LazyHolder {
+    static final Singleton INSTANCE = new Singleton();
+  }
+  public static Singleton getInstance() {
+    return LazyHolder.INSTANCE;
+  }
+}
+</code></pre>
+<p>由于访问 LazyHolder 类的静态变量会初始化且会初始化LazyHolder类一次，并且类的初始化过程是线程安全的，所以这种实现单例的方式，可以保证应用中只会有一个 Singleton 实例。</p>
+
+            </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://lengfj.github.io/post/java-dai-ma-shi-zen-me-yun-xing-de/">
+                  <h3 class="post-title">
+                    Java代码是怎么运行的
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>
